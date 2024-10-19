@@ -16,12 +16,48 @@ const ChatWindow = ({ sender, socket, setVideoCall }) => {
     const receiver = useSelector(store => store.receiver);
     const dispatch = useDispatch();
 
+    const speakText = (text) => {
+        if (!text) {
+          console.error('Please provide text to speak');
+          return;
+        }
+      
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = text;
+        speech.lang = 'en-IN'; // Set language to Indian English
+        speech.volume = 1; // Volume from 0 to 1
+        speech.rate = 1; // Speed of speech from 0.1 to 10
+        speech.pitch = 1; // Pitch of the voice from 0 to 2
+      
+        // Get the available voices
+        const voices = window.speechSynthesis.getVoices();
+      
+        // Filter for Indian English voices, prioritize female voice
+        const indianEnglishFemaleVoice = voices.find(voice => voice.lang === 'en-IN' && voice.name.includes('female'));
+        
+        // Fall back to any available Indian English voice if a female voice isn't found
+        if (indianEnglishFemaleVoice) {
+          speech.voice = indianEnglishFemaleVoice;
+        } else {
+          const indianEnglishVoice = voices.find(voice => voice.lang === 'en-IN');
+          if (indianEnglishVoice) {
+            speech.voice = indianEnglishVoice;
+          }
+        }
+      
+        // Speak the text
+        window.speechSynthesis.speak(speech);
+      };
+      
+      
+
     // Receiving chat
     useEffect(() => {
         if (socket) {
             socket.on("received_message", (msg) => {
                 msg.id = uuid();
                 dispatch(chatsSliceAction.receiveChat(msg));
+                speakText(msg.msg)
             });
         }
         return () => {
