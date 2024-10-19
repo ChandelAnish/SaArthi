@@ -1,21 +1,55 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { userDetailsSliceAction } from '../store/UserDetails';
 
 const Profile = () => {
   const user = useSelector((store) => store.userDetails);
+  const dispatch = useDispatch()
 
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [warning, setWarning] = useState('');
+
+
+  useEffect(()=>{
+    console.log(user)
+  })
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
-    // Implement password change logic here, including current password verification
-    console.log('Current Password:', currentPassword);
-    console.log('New Password:', newPassword);
-    setIsChangingPassword(false);
-    setCurrentPassword('');
-    setNewPassword('');
+    
+    // Check if the current password is correct
+    if (currentPassword !== user.password) {
+      setWarning('Current password is incorrect.');
+      return;
+    }
+
+    // Clear warning if the password is correct
+    setWarning('');
+    
+    // Update user password
+    const updatedUserInfo = {
+      password: newPassword, // Update the new password
+    };
+
+    // Send request to update user info
+    axios
+      .patch(`${import.meta.env.VITE_SERVER_URL}/updateUserInfo`, updatedUserInfo, {withCredentials: true})
+      .then((response) => {
+        console.log('User information updated successfully:', response.data);
+        // Reset fields after successful update
+        setIsChangingPassword(false);
+        setCurrentPassword('');
+        setNewPassword('');
+        setWarning('User details Updated');
+        dispatch(userDetailsSliceAction.getUserDetails({...user,password: newPassword}))
+      })
+      .catch((error) => {
+        console.error('Error updating user information:', error);
+        setWarning('Failed to update user information. Please try again.');
+      });
   };
 
   if (!user) {
@@ -23,10 +57,10 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-800 p-4">
+    <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-800 p-4">
       <div className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-lg p-8 w-full">
         {/* Left side - Profile Picture */}
-        <div className="md:w-1/3 flex justify-center items-center mb-8 md:mb-0"> {/* Center vertically */}
+        <div className="md:w-1/3 flex justify-center items-center mb-8 md:mb-0">
           <img
             src={user.profileImageURL || 'https://via.placeholder.com/300'}
             alt="Profile"
@@ -49,6 +83,7 @@ const Profile = () => {
             </button>
           ) : (
             <form onSubmit={handlePasswordChange} className="mb-6">
+              {warning && <p className={(warning === 'User details Updated')? "text-green-500" :"text-red-500"}>{warning}</p>}
               <input
                 type="password"
                 value={currentPassword}
@@ -65,28 +100,24 @@ const Profile = () => {
               />
               <button
                 type="submit"
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-xl"
+                className={`bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-xl ${
+                  currentPassword !== user.password ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                disabled={currentPassword !== user.password} // Disable if the password is incorrect
               >
                 Save New Password
               </button>
             </form>
           )}
 
-          {/* Disability Dropdown */}
+          {/* Disability Display (uneditable) */}
           <div className="mb-6">
-            <label htmlFor="disability" className="block text-gray-700 dark:text-gray-300 mb-2 text-xl">
+            <label className="block text-gray-700 dark:text-gray-300 mb-2 text-xl">
               Disability:
             </label>
-            <select
-              id="disability"
-              className="border rounded-lg p-3 w-full dark:bg-gray-700 dark:text-white text-xl"
-              defaultValue={user.disability || ''}
-            >
-              <option value="">Select a disability</option>
-              <option value="deaf">Deaf</option>
-              <option value="mute">Mute</option>
-              <option value="blind">Blind</option>
-            </select>
+            <p className="border rounded-lg p-3 w-full dark:bg-gray-700 dark:text-white text-xl">
+              {user.disability || 'Not specified'}
+            </p>
           </div>
         </div>
       </div>

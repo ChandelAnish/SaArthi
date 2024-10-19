@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET_KEY;
 
-const setUser = (name,email, password, profileImageURL) => {
+const setUser = (name,email, password, profileImageURL, disability) => {
     const payload = {
         name,
         email,
         password,
-        profileImageURL
+        profileImageURL,
+        disability
     }
     return jwt.sign(payload, secret)
 }

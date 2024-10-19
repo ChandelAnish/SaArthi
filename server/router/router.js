@@ -5,7 +5,7 @@ const router = express.Router();
 const { testing, authenticatedUser } = require("../controllers/testing");
 const { login } = require("../controllers/login");
 const { signup } = require("../controllers/signup");
-const { getAllUsers, getloggedUserDetails } = require("../controllers/user");
+const { getAllUsers, getloggedUserDetails, updateUserInfo } = require("../controllers/user");
 const { patchChat, getAllChats } = require("../controllers/chats");
 const { saveImage, uploadImage} = require("../controllers/saveAndUploadImage");
 const { upload } = require("../multer/multer");
@@ -28,6 +28,9 @@ router.route("/loggedUserDetails").get(loggedInUserOnly, getloggedUserDetails);
 
 //get all users
 router.route("/users").get(loggedInUserOnly, getAllUsers);
+
+//update users info
+router.route("/updateUserInfo").patch(loggedInUserOnly, updateUserInfo);
 
 //upload image to cloudinary
 router.route('/upload-img').post(upload.single('profileImage'),saveImage)
