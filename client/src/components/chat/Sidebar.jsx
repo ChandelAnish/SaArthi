@@ -32,7 +32,7 @@ const Sidebar = ({ startChat, onlineUsers }) => {
             {/* Pals list */}
             <div className="flex-grow overflow-auto p-2">
                 {pals.map((item) => {
-                    const online = onlineUsers.hasOwnProperty(`${item.username}`);
+                    const online = onlineUsers.hasOwnProperty(`${item.name}`);
                     return (
                         <Pal
                             receiver={item.name}

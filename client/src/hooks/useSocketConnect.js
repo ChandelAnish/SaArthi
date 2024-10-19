@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {io} from "socket.io-client";
-
-
-
+import { io } from "socket.io-client";
 
 export default function useSocketConnect() {
-
   const userDetails = useSelector((store) => store.userDetails);
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState({});
 
   useEffect(() => {
-    console.log("useEffect running ", userDetails);
+    // console.log("useEffect running ", userDetails);
     const socket = io(`${import.meta.env.VITE_SERVER_URL}`, {
       query: {
-        username: userDetails.username,
+        name: userDetails.name,
       },
     });
 
@@ -35,6 +31,5 @@ export default function useSocketConnect() {
       socket.disconnect();
     };
   }, []);
-
-  return [socket,onlineUsers];
+  return [socket, onlineUsers];
 }

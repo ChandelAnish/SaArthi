@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       {
         path: '/', element: <Dashboard />, loader: getLoggedUserDetails,
         children: [
-          { path: '/chat', element: <Chat /> },
+          { path: '/', element: <Chat /> },
         ]
       },
       { path: '/login', element: <LoginPage /> },

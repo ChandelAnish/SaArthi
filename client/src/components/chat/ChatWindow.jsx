@@ -16,10 +16,6 @@ const ChatWindow = ({ sender, socket, setVideoCall }) => {
     const receiver = useSelector(store => store.receiver);
     const dispatch = useDispatch();
 
-    const displayVideo = () => {
-        setVideoCall(true);
-    };
-
     // Receiving chat
     useEffect(() => {
         if (socket) {
@@ -52,6 +48,8 @@ const ChatWindow = ({ sender, socket, setVideoCall }) => {
                 msg: inputMsg.current.value.trim(),
                 time: `${new Date(Date.now()).getHours()}:${new Date(Date.now()).getMinutes()}`
             };
+
+            console.log(message)
 
             // Patching this chat into the message array in DB
             mutation.mutate(message);

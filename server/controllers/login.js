@@ -13,7 +13,7 @@ const login = async (req, res) => {
     } else {
       // console.log(userDetails);
       if (password === userDetails.password) {
-        const token = setUser(userDetails.name, email, password);
+        const token = setUser(userDetails.name, email, password, userDetails.profileImageURL);
         // console.log(token)
 
         res.cookie("SaArthi_Token", token, {

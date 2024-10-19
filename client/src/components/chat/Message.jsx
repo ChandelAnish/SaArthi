@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Message({ chat, sender }) {
   return (
-    <div className="mb-3 flex justify-end">
+    <div className={`mb-3 flex ${chat.sender === sender ? 'justify-end' : 'justify-start'}`}>
       <div
         className={`p-3 max-w-xs md:max-w-md rounded-lg shadow-lg ${
           chat.sender === sender

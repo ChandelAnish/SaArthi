@@ -36,14 +36,15 @@ export default function Chat() {
   };
 
   const startChat = async (rec) => {
+    console.log(rec)
     dispatch(receiverSliceAction.setReceiver(rec));
-    await loadOrStartConversation(userDetails.username, rec);
+    await loadOrStartConversation(userDetails.name, rec);
   };
 
   return (
     <div className="flex h-[87vh] w-full bg-gray-100 dark:bg-gray-800">
       <Sidebar startChat={startChat} onlineUsers={onlineUsers} />
-      <ChatWindow sender={userDetails.username} socket={socket} />
+      <ChatWindow sender={userDetails.name} socket={socket} />
     </div>
   );
 }
