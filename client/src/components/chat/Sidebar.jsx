@@ -10,7 +10,7 @@ const Sidebar = ({ startChat, onlineUsers }) => {
     useAddInitialPals();
 
     return (
-        <div className="flex flex-col w-1/3 border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="flex flex-col w-1/3 border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 w-full">
             {/* Header */}
             <div className="flex justify-between items-center p-3 border-b border-gray-300 dark:border-gray-700">
                 <FaUserCircle size="40" />

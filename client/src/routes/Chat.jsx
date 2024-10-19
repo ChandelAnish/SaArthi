@@ -42,9 +42,19 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex h-[87vh] w-full bg-gray-100 dark:bg-gray-800">
-      <Sidebar startChat={startChat} onlineUsers={onlineUsers} />
-      <ChatWindow sender={userDetails.name} socket={socket} />
-    </div>
+<div className="flex flex-col md:flex-row-reverse h-[87vh] w-full bg-gray-100 dark:bg-gray-800">
+  {/* ChatWindow takes the full width on small screens, then appears above Sidebar on medium+ screens */}
+  <div className="w-full md:w-2/3 flex-grow">
+    <ChatWindow sender={userDetails.name} socket={socket} />
+  </div>
+
+  {/* Sidebar appears below the ChatWindow on medium+ screens */}
+  <div className="w-full md:w-1/3 min-w-[250px] lg:min-w-[300px] xl:min-w-[400px]">
+    <Sidebar startChat={startChat} onlineUsers={onlineUsers} />
+  </div>
+</div>
+
+
+
   );
 }
