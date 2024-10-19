@@ -35,7 +35,8 @@ const Sidebar = ({ startChat, onlineUsers }) => {
                     const online = onlineUsers.hasOwnProperty(`${item.username}`);
                     return (
                         <Pal
-                            receiver={item.username}
+                            receiver={item.name}
+                            profileImageURL={item.profileImageURL}
                             key={item._id}
                             startChat={startChat}
                             online={online}

@@ -12,10 +12,10 @@ const socketConnection = (server) => {
   });
 
   io.on("connection", (socket) => {
-    const username = socket.handshake.query.username;
-    console.log(username, "connected with ID : ", socket.id);
+    const name = socket.handshake.query.name;
+    console.log(name, "connected with ID : ", socket.id);
 
-    onlineUsersMap[username] = socket.id;
+    onlineUsersMap[name] = socket.id;
     console.log(onlineUsersMap)
     io.emit("online-users",onlineUsersMap)
 
@@ -40,7 +40,7 @@ const socketConnection = (server) => {
     });
     
     socket.on('candidate', (data) => {
-      // console.log("candidate ",data.username)
+      // console.log("candidate ",data.name)
       io.to(onlineUsersMap[data.receiver]).emit('candidate', data);
     });  
 

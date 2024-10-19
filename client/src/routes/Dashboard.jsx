@@ -2,11 +2,18 @@ import 'flowbite'
 import React from 'react'
 import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
-import { Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom'
+import { userDetailsSliceAction } from '../store/UserDetails';
 
 
 export default function Dashboard() {
+
+    const dispatch = useDispatch()
+
+    const userDetails = useLoaderData()
+    dispatch(userDetailsSliceAction.getUserDetails(userDetails))
 
     const { toggleDarkMode } = useOutletContext();
 

@@ -4,7 +4,6 @@ import { chatsSliceAction } from '../../store/Chats';
 import Message from './Message';
 import Welcome from './Welcome';
 import { v4 as uuid } from 'uuid';
-import { FaVideo } from "react-icons/fa";
 import usePatchChatArray from '../../hooks/usePatchChatArray';
 
 const ChatWindow = ({ sender, socket, setVideoCall }) => {
@@ -70,10 +69,7 @@ const ChatWindow = ({ sender, socket, setVideoCall }) => {
             {/* Chat Header */}
             <div className="p-4 border-b border-gray-300 dark:border-gray-700">
                 <h5 className="flex justify-between items-center">
-                    {receiver || 'No Receiver'}
-                    {receiver && (
-                        <FaVideo onClick={displayVideo} className="text-purple-500 cursor-pointer text-xl" />
-                    )}
+                    {receiver || 'Start Conversation'}
                 </h5>
             </div>
 
