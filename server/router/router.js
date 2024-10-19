@@ -9,6 +9,7 @@ const { getAllUsers, getloggedUserDetails } = require("../controllers/user");
 const { patchChat, getAllChats } = require("../controllers/chats");
 const { saveImage, uploadImage} = require("../controllers/saveAndUploadImage");
 const { upload } = require("../multer/multer");
+const { deleteToken } = require("../controllers/deleteToken");
 
 router.get("/", testing);
 
@@ -30,6 +31,10 @@ router.route("/users").get(loggedInUserOnly, getAllUsers);
 
 //upload image to cloudinary
 router.route('/upload-img').post(upload.single('profileImage'),saveImage)
+
+//delete token
+router.route("/deleteToken").get(loggedInUserOnly, deleteToken);
+
 
 //save chats & get chat
 router.route("/chats/:user1/:user2").get(loggedInUserOnly, getAllChats);

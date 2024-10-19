@@ -3,10 +3,15 @@ import React, { useState } from 'react'
 import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
 import { useDispatch } from 'react-redux';
-import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom'
 import { userDetailsSliceAction } from '../store/UserDetails';
 import Cookies from 'js-cookie';
+import { MdMarkUnreadChatAlt } from "react-icons/md";
+import { FaHandsAslInterpreting } from "react-icons/fa6";
+import { FaUserAlt } from "react-icons/fa";
+import { TbLogout2 } from "react-icons/tb";
+import axios from 'axios';
 
 
 export default function Dashboard() {
@@ -24,9 +29,29 @@ export default function Dashboard() {
     };
 
     //logout
-    const handleLogout = () => {
+    async function deleteSaArthiToken() {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/deleteToken`, {
+                withCredentials: true
+            });
+            console.log('Token deleted successfully:', response.data);
+            
+            // Attempt to delete the cookie client-side
+            document.cookie = "SaArthi_Token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost; secure; samesite=none;";
+            
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting token:', error);
+            if (error.response) {
+                console.error('Server response:', error.response.data);
+            }
+            throw error; // Re-throw the error so it can be handled by the caller if needed
+        }
+    }
+
+    const handleLogout = async() => {
         // Delete the cookie
-        Cookies.remove('SaArthi_Token');
+        await deleteSaArthiToken()
 
         // Navigate to the login page
         navigate('/login');
@@ -101,15 +126,30 @@ export default function Dashboard() {
             <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
                     <ul className="space-y-2 font-medium">
-                        
+
                         <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                    <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                                    <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                                </svg>
+                            <Link to="/transcribe" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <FaHandsAslInterpreting className='text-2xl' />
+                                <span className="ms-3">Transcribe</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <MdMarkUnreadChatAlt className='text-lg' />
                                 <span className="ms-3">Chat</span>
-                            </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/profile" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <FaUserAlt className='text-xl' />
+                                <span className="ms-3">Profile</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <p className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" onClick={handleLogout}>
+                                <TbLogout2 className='text-xl font-black' />
+                                <span className="ms-3">Logout</span>
+                            </p>
                         </li>
 
                     </ul>

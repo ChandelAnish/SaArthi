@@ -10,6 +10,8 @@ import Chat from './routes/Chat.jsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Provider } from 'react-redux'
 import store from './store/index.js'
+import Transcribe from './routes/Transcribe.jsx'
+import Profile from './routes/Profile.jsx'
 
 
 
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
         path: '/', element: <Dashboard />, loader: getLoggedUserDetails,
         children: [
           { path: '/', element: <Chat /> },
+          { path: '/transcribe', element: <Transcribe /> },
+          { path: '/profile', element: <Profile /> },
         ]
       },
       { path: '/login', element: <LoginPage /> },
