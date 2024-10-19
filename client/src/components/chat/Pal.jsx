@@ -1,17 +1,24 @@
-import React from 'react'
-import { FaUserCircle, FaCommentDots, FaEllipsisV } from 'react-icons/fa';
+import React from 'react';
+import { FaUserCircle } from 'react-icons/fa';
 
-export default function Pal({receiver,startChat,online}) {
+export default function Pal({ receiver, startChat, online }) {
     return (
-        <div className="d-flex p-2 align-items-center" style={{ cursor: 'pointer' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'} onClick={()=>startChat(receiver)}>
+        <div
+            className="flex items-center p-2 cursor-pointer transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            onClick={() => startChat(receiver)}
+        >
             <div>
                 <FaUserCircle size="40" />
             </div>
-            <div className="ms-2">
-                <div className="fw-bold">{receiver}</div>
-                {/* <div style={{ color: '#888' }}>+91 75948 06809 changed their profile photo</div> */}
+            <div className="ml-2">
+                <div className="font-bold text-gray-900 dark:text-gray-100">{receiver}</div>
             </div>
-            {(online) && <div className='rounded-circle' style={{width:"10px",height:"10px",marginLeft:"5px",backgroundColor:"rgb(215 94 253)"}}></div>}
+            {online && (
+                <div
+                    className="rounded-full w-2.5 h-2.5 ml-2 bg-purple-500"
+                    title="Online"
+                ></div>
+            )}
         </div>
-    )
+    );
 }

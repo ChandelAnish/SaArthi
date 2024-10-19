@@ -14,9 +14,10 @@ const getloggedUserDetails = async (req, res) => {
 //get all users
 const getAllUsers = async (req, res) => {
   try {
+    console.log(req.userDetails)
     let allUsers = await user.find({});
     allUsers = allUsers.filter((item) => {
-      return item.username != req.userDetails.username;
+      return item.email != req.userDetails.email;
     });
     res.status(200).json(allUsers);
   } catch (error) {

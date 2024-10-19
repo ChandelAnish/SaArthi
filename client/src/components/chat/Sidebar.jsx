@@ -5,39 +5,44 @@ import Pal from './Pal';
 import useAddInitialPals from '../../hooks/useAddInitialPals';
 
 const Sidebar = ({ startChat, onlineUsers }) => {
-
-    const pals = useSelector(store => store.pals);
+    const pals = useSelector((store) => store.pals);
 
     useAddInitialPals();
 
     return (
-        <div className="d-flex flex-column" style={{ width: '30%', borderRight: '1px solid #e6e6e6' }}>
-            <div className="d-flex justify-content-between p-2 border-bottom">
-                <div>
-                    <FaUserCircle size="40" />
-                </div>
-                <div className="d-flex gap-2">
+        <div className="flex flex-col w-1/3 border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
+            {/* Header */}
+            <div className="flex justify-between items-center p-3 border-b border-gray-300 dark:border-gray-700">
+                <FaUserCircle size="40" />
+                <div className="flex space-x-4">
                     <FaCommentDots size="20" />
                     <FaEllipsisV size="20" />
                 </div>
             </div>
-            <div className="p-2">
-                <input type="text" className="form-control" placeholder="Search or start a new chat" />
+
+            {/* Search bar */}
+            <div className="p-3">
+                <input
+                    type="text"
+                    className="w-full p-2 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+                    placeholder="Search or start a new chat"
+                />
             </div>
 
-
-            <div className="flex-grow-1 overflow-auto">
-
+            {/* Pals list */}
+            <div className="flex-grow overflow-auto p-2">
                 {pals.map((item) => {
-                    let online = false;
-                    if (onlineUsers.hasOwnProperty(`${item.username}`)) online = true;
-                    return <Pal receiver={item.username} key={item._id} startChat={startChat} online={online} />
-                }
-                )}
-
+                    const online = onlineUsers.hasOwnProperty(`${item.username}`);
+                    return (
+                        <Pal
+                            receiver={item.username}
+                            key={item._id}
+                            startChat={startChat}
+                            online={online}
+                        />
+                    );
+                })}
             </div>
-
-
         </div>
     );
 };

@@ -14,9 +14,9 @@ export default function useAddInitialPals() {
                     credentials: "include"
                 });
                 const initialPals = await response.json();
+                console.log(initialPals);
                 if (initialPals.signin === false) {
                     window.open('/signin', '_parent')
-                    // window.open('https://fusionflow-signin.onrender.com', '_parent')
                     return;
                 }
                 dispatch(palsSliceAction.addInitialPals(initialPals))

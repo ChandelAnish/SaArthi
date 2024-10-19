@@ -9,7 +9,7 @@ const loggedInUserOnly = (req, res, next) => {
     }
     // console.log(token);
     const userDetails = getUser(token);
-    // console.log(userDetails);
+    // console.log("auth :\n",userDetails);
     req.userDetails=userDetails;// Attached decoded token data to req object
     next();
   } catch (error) {
