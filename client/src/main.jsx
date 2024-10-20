@@ -23,8 +23,8 @@ const router = createBrowserRouter([
       {
         path: '/', element: <Dashboard />, loader: getLoggedUserDetails,
         children: [
-          { path: '/', element: <Chat /> },
-          { path: '/transcribe', element: <Transcribe /> },
+          { path: '/', element: <Transcribe /> },
+          { path: '/chat', element: <Chat /> },
           { path: '/profile', element: <Profile /> },
         ]
       },

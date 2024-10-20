@@ -128,13 +128,13 @@ export default function Dashboard() {
                     <ul className="space-y-2 font-medium">
 
                         <li>
-                            <Link to="/transcribe" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <FaHandsAslInterpreting className='text-2xl' />
                                 <span className="ms-3">Transcribe</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <Link to="/chat" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <MdMarkUnreadChatAlt className='text-lg' />
                                 <span className="ms-3">Chat</span>
                             </Link>

@@ -5,6 +5,9 @@ import Pal from './Pal';
 import useAddInitialPals from '../../hooks/useAddInitialPals';
 
 const Sidebar = ({ startChat, onlineUsers }) => {
+
+    const userDetails = useSelector((store) => store.userDetails);
+
     const pals = useSelector((store) => store.pals);
 
     useAddInitialPals();
@@ -13,7 +16,8 @@ const Sidebar = ({ startChat, onlineUsers }) => {
         <div className="flex flex-col w-1/3 border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 w-full">
             {/* Header */}
             <div className="flex justify-between items-center p-3 border-b border-gray-300 dark:border-gray-700">
-                <FaUserCircle size="40" />
+                <img className="w-8 h-8 rounded-full" src={`${userDetails.profileImageURL}`} alt="user photo" />
+                <span className='text-xs font-bold'>~{userDetails.name}</span>
                 <div className="flex space-x-4">
                     <FaCommentDots size="20" />
                     <FaEllipsisV size="20" />
