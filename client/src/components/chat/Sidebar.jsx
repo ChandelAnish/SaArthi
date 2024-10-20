@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FaUserCircle, FaCommentDots, FaEllipsisV } from 'react-icons/fa';
+import { FaCommentDots, FaEllipsisV } from 'react-icons/fa';
 import Pal from './Pal';
 import useAddInitialPals from '../../hooks/useAddInitialPals';
 
 const Sidebar = ({ startChat, onlineUsers }) => {
 
     const userDetails = useSelector((store) => store.userDetails);
-
     const pals = useSelector((store) => store.pals);
-
     useAddInitialPals();
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    // Filter pals based on the search term
+    const filteredPals = pals.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="flex flex-col w-1/3 border-r border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 w-full">
@@ -30,23 +35,31 @@ const Sidebar = ({ startChat, onlineUsers }) => {
                     type="text"
                     className="w-full p-2 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
                     placeholder="Search or start a new chat"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
 
             {/* Pals list */}
             <div className="flex-grow overflow-auto p-2">
-                {pals.map((item) => {
-                    const online = onlineUsers.hasOwnProperty(`${item.name}`);
-                    return (
-                        <Pal
-                            receiver={item.name}
-                            profileImageURL={item.profileImageURL}
-                            key={item._id}
-                            startChat={startChat}
-                            online={online}
-                        />
-                    );
-                })}
+                {filteredPals.length > 0 ? (
+                    filteredPals.map((item) => {
+                        const online = onlineUsers.hasOwnProperty(item.name);
+                        return (
+                            <Pal
+                                receiver={item.name}
+                                profileImageURL={item.profileImageURL}
+                                key={item._id}
+                                startChat={startChat}
+                                online={online}
+                            />
+                        );
+                    })
+                ) : (
+                    <div className="text-center text-gray-500 dark:text-gray-300">
+                        No user found
+                    </div>
+                )}
             </div>
         </div>
     );
