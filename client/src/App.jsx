@@ -7,7 +7,7 @@ export default function App() {
 
   useEffect(() => {
     const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'dark') {
+    if (currentTheme === 'dark' || !currentTheme) {
       setDarkMode(true);
       document.documentElement.classList.add('dark');
     }
