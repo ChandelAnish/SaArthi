@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { Link, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom'
 import { userDetailsSliceAction } from '../store/UserDetails';
-import Cookies from 'js-cookie';
 import { MdMarkUnreadChatAlt } from "react-icons/md";
 import { FaHandsAslInterpreting } from "react-icons/fa6";
 import { FaUserAlt } from "react-icons/fa";
