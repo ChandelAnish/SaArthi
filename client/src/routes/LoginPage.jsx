@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import Cookies from 'js-cookie';
 
 export default function LoginPage() {
 
