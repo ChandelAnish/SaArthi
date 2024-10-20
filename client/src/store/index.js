@@ -2,7 +2,7 @@ import { configureStore} from "@reduxjs/toolkit";
 import chatsSlice from "./Chats";
 import palsSlice from "./Pals";
 import userDetailsSlice from "./UserDetails";
-import receiverSlice from "./receiver";
+import receiverSlice from "./Receiver";
 
 const store = configureStore({
     reducer:{
