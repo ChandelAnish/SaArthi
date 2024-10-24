@@ -1,12 +1,14 @@
-import React from 'react'
-import CameraFeed from '../components/CameraFeed'
-import CopyText from '../components/CopyText'
+import React, { useState } from "react";
+import CameraFeed from "../components/CameraFeed";
+import CopyText from "../components/CopyText";
 
 export default function Transcribe() {
+  const [text, setText] = useState("");
+
   return (
     <div>
-      <CameraFeed/>
-      <CopyText/>
+      <CameraFeed setText={setText} text={text} />
+      <CopyText text={text} />
     </div>
-  )
+  );
 }

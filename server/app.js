@@ -29,7 +29,7 @@ const server = createServer(app);
 socketConnection(server);
 
 // Start server and connect to DB
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
